@@ -1,0 +1,71 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+
+# README
+Basic overview of the project
+
+[] First I build the scaffolding for api calls
+I will use the same thing I did for cortical.io, read .Renviron for
+a key or ask for a key.
+
+The basic 
+
+
+
+# basic information
+
+basic call : http://api.musicgraph.com/ 
+
+Response Codes
+
+-1 - Unknown Error
+
+0 - Success
+
+1 - Missing/ Invalid API Key
+
+2 - This API key is not allowed to call this method
+
+3 - Rate Limit Exceeded
+
+4 - Not Supported
+
+5 - Invalid Search Operation
+
+6 - Invalid Edge Name
+
+7 - Invalid MusicGraph ID
+
+8 - Invalid Type
+
+
+
+200 - Success
+
+304 - Not Modified
+
+400 - Bad Request - the request is not valid
+
+403 - Forbidden - you are not authorized to access that resource
+
+404 - Incorrect path; Not Found - The requested resource could not be found
+
+429 - Too Many Requests - You have exceeded the rate limit associated with your API key
+
+5XX - Server Error
+
+example:
+
+`GET /api/v2/artist/ee2564c7-a6b5-11e0-b446-00251188dd67?api_key=c8303e90962e3a5ebd5a1f260a69b138&fields=id,name,albums.limit(10).fields(id,title)`
