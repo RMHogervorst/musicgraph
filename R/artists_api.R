@@ -36,12 +36,15 @@ artist_lookup <- function( prefix, genre = NULL, decade = NULL,
     if(!is.null(query)){
         querystring <- query
     }else{
-        query <- list(prefix, genre, decade, limit, offset)
+        querystring <- list(prefix = prefix, genre = genre, decade = decade,
+                            limit = limit, offset =offset)
     }
 
-    result <- api_get_call(path = "api/v2/artist/suggest",querylist = querystring,api_key = api_key)
+    result <- api_get_call(path = "api/v2/artist/suggest",
+                           querylist = querystring,api_key = api_key)
     result
 }
+#result <- artist_lookup(prefix = "james br")
 
 #' Search for an artist
 #'
@@ -84,9 +87,10 @@ result_to_dataframe <- function(object){
 
 #' Artist Edges
 #'
-#' Wow such inspiring
+#' Search for more information about artists. Either general information or
+#' similar artists, albums or tracks.
 #'
-#' either ID or id/similar, id/albums id/tracks
+#' either artist id or id/similar, id/albums id/tracks
 #' possibly fields
 #' @param artistID an artistID or artistID/similar, artistID/albums or artistID/tracks
 #' @param fields *optional f.i. name, id, spotify_id, gender, popularity etc.
@@ -94,6 +98,12 @@ result_to_dataframe <- function(object){
 #' @return a response object.
 #' @export
 #' @family artists_endpoint
+#' @example
+#' \dontrun{
+#' #search for justin bieber tracks
+#' Justin <- artist_edges(artistID ="680687b6-94f6-c447-fe5b-4533fb937de6/tracks"
+#' )
+#' }
 artist_edges <- function(artistID, fields = NULL, api_key = NULL){
     artist_id <- validate_artistID(artistID)
     #fields needs to be like id,name
