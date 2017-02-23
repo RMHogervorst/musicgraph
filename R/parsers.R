@@ -8,9 +8,10 @@
 #' @export
 #' @return a data.frame
 result_to_dataframe <- function(object){
-    # checks
     parsed_result <- result_parser(object)
-    parsed_result$data
+    pagination_parser(parsed_result)
+    data <- parsed_result$data
+    data
 }
 
 #result_to_dataframe(response)

@@ -17,19 +17,11 @@ knitr::opts_chunk$set(
 # README
 Basic overview of the project
 
-[x] First I build the scaffolding for api calls
-I will use the same thing I did for cortical.io, read .Renviron for
-a key or ask for a key.
 
 The basic idea is to connect to the graphsearch api, not the other pieces.
 I will make some pieces that connect and keep as many things open. So that you
 can construct a query without much interference from R. My idea is to have
-a query field like "prefix=gree&genre=rock" that you can fill yourself.
-I might add functions on top that would fill in some of those fields for you.
-
-Every endpoint has the option to fill in parameters or use `query` to type it
-yourself. 
-
+a query field like "prefix=gree&genre=rock". 
 The graphsearch consists of Artist, Album and Track.
 
 
@@ -40,8 +32,80 @@ The graphsearch consists of Artist, Album and Track.
 You will usually have to do multiple calls. Searching for artist returns an ID
 and the ID can then be used on the artists metadata.
 
+# Installation
+
+Install with `devtools::install_github("RMHogervorst/musicgraph")`
+
+# Basic use
+
+1. register on musicgraph.com for a developer key. 
+2. You have to either supply the key in every call, or save the api key
+in your .Renviron as MUSICGRAPH_KEY = "yourkey" and restart your R-session.
+
+3. do calls with the package
+
+## Practical usecase
+
+I want to find out about the albums of the nu-metal / rock band Linkin Park.
+
+### artist search
+```{r basic use}
+library(musicgraph)
+library(dplyr)
+# do a search for the artist
+kinda_like_linkinpark <- artist_lookup("Linkin")
+# view the results
+result_to_dataframe(kinda_like_linkinpark) %>% 
+    select(id, name) %>% 
+    head(3)
+```
+
+This search (i'm only showing the top 3 results of the twenty)
+gives me the artistID: "cef94f14-4f1f-4a34-8e7b-5a0e1dd600c7".
+"e6207e83-a6b5-11e0-b446-00251188dd67"
+Then let's download all the tracks. 
+The results are parsed per page, the limit parameter tells you how many results
+per page, and the offset which page you want to download.
+
+```{r diving deeper}
+LP_results1 <- artist_edges(artistID = "e6207e83-a6b5-11e0-b446-00251188dd67/tracks", limit = 100)
+LP_results2 <- artist_edges(artistID = "e6207e83-a6b5-11e0-b446-00251188dd67/tracks", limit = 100, offset = 2)
+result_to_dataframe(LP_results1) %>% dim()
+result_to_dataframe(LP_results1) %>% names()
+```
+
+The dataframes are thus 100 rows by 22 columns. 
 
 
+### track search
+One of the tracks has the id : "794c1901-3da7-45d1-913b-da7da90d0387"
+It's guilty all the same. If we want to know more about that track we can 
+explore the tracks endpoint. 
+
+```{r exploring tracks}
+song <- track_edges("794c1901-3da7-45d1-913b-da7da90d0387")
+result_to_dataframe(song)
+```
+
+
+### album search
+In the artist search a album ID came up for the album 'the hunting party':
+"516c15c1-c80c-4456-abd5-1a271f170ab3"
+
+```{r album search}
+album <- album_edges(albumID = "516c15c1-c80c-4456-abd5-1a271f170ab3/tracks")
+album %>% 
+    result_to_dataframe() %>% 
+    select( title, release_year, popularity,  main_genre) %>% 
+    head(4)
+```
+
+
+### known issues
+
+- when an artist has no tracks an empty list is returned.
+- I have not made a message that returns how many results there are
+- tracks result is not useful. it returns a nested list. 
 
 
 

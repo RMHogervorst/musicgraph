@@ -97,12 +97,14 @@ artist_search <- function(name = NULL, similar_to = NULL,
 #' @return a response object.
 #' @export
 #' @family artists_endpoint
-artist_edges <- function(artistID, fields = NULL, api_key = NULL){
+artist_edges <- function(artistID, fields = NULL, offset = NULL, limit = NULL, api_key = NULL){
     artist_id <- validate_artistID(artistID)
     #fields needs to be like id,name
     path <- paste0("api/v2/artist/",artist_id)
     result <- api_get_call(path = path,
-                           querylist = list(fields = fields), api_key = api_key)
+                           querylist = list(fields = fields,
+                                            offset = offset,
+                                            limit = limit), api_key = api_key)
     result
 }
 # response2 <- artist_edges("f76a1bfe-b93c-49d5-8fc2-a6cbaece3b7a")

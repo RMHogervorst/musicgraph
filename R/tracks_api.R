@@ -98,7 +98,7 @@ track_search <- function(title = NULL,
 #'
 #'
 #' possibly fields
-#' @param albumID an albumID or albumID/artists or albumID/tracks
+#' @param trackID a trackID
 #' @param fields *optional f.i. name, id, spotify_id, gender, popularity etc.
 #' @param api_key your developer API key see \url{getting_api_key}
 #' @return a response object.
@@ -106,8 +106,8 @@ track_search <- function(title = NULL,
 #' @family tracks_endpoint
 #'
 #'
-track_edges <- function(albumID, fields = NULL, api_key = NULL){
-    albumID <- validate_artistID(albumID)
+track_edges <- function(trackID, fields = NULL, api_key = NULL){
+    trackID <- validate_artistID(trackID)
     #fields needs to be like id,name
     path <- paste0("api/v2/track/",albumID)
     result <- api_get_call(path = path,
