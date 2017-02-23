@@ -17,12 +17,12 @@
 #'
 #' If you don't know the exact name of an artist this allows you to search for
 #' an artist with partial matching.
-#'
+#' \url{https://developer.musicgraph.com/api-docs/v2/dictionary}
 #'
 #' @param query use this if you know exactly what your query is, leave NULL if you
 #'     have want to build up the query in steps
 #' @param prefix part of the name
-#' @param genre *optional a genre such as Blues, Rock etc.\link{https://developer.musicgraph.com/api-docs/v2/dictionary}
+#' @param genre *optional a genre such as Blues, Rock etc.
 #' @param decade *optional a decade for instance
 #' @param limit *optional max number of results defaults to 20
 #' @param offset *optional pagination which page of the results do you want
@@ -51,8 +51,12 @@ artist_lookup <- function( prefix, genre = NULL, decade = NULL,
 #' Search for a specific artist, the name needs to match exactly. But you can
 #' also search for similar artists but the name needs to match exactly too.
 #'
+#' \url{https://developer.musicgraph.com/api-docs/v2/dictionary}
+#'
 #' @param name *optional Return artists who match the name; exact, case insensitive 	"John+Lennon"
 #' @param similar_to *optional Return artists who are similar to the given name; exact, case insensitive 	&similar_to=Pink+Floyd
+#' @param country see the dictionary for more info about the country
+#' @param gender male or female
 #' @inheritParams artist_lookup
 #' @return a response object.
 #' @export
@@ -77,12 +81,7 @@ artist_search <- function(name = NULL, similar_to = NULL,
     result
 }
 
-result_to_dataframe <- function(object){
-    # checks
-    parsed_result <- result_parser(object)
-    parsed_result$data
-}
-#result_to_dataframe(response)
+
 
 
 #' Artist Edges
@@ -98,12 +97,6 @@ result_to_dataframe <- function(object){
 #' @return a response object.
 #' @export
 #' @family artists_endpoint
-#' @example
-#' \dontrun{
-#' #search for justin bieber tracks
-#' Justin <- artist_edges(artistID ="680687b6-94f6-c447-fe5b-4533fb937de6/tracks"
-#' )
-#' }
 artist_edges <- function(artistID, fields = NULL, api_key = NULL){
     artist_id <- validate_artistID(artistID)
     #fields needs to be like id,name

@@ -10,12 +10,13 @@
 #' an artist with partial matching.
 #'
 #' It will also return the album id.
-#'
+#' See for genres and decade valid options:
+#' \url{https://developer.musicgraph.com/api-docs/v2/dictionary}
 #'
 #' @param query use this if you know exactly what your query is, leave NULL if you
 #'     have want to build up the query in steps
 #' @param prefix part of the name
-#' @param genre *optional a genre such as Blues, Rock etc.\link{https://developer.musicgraph.com/api-docs/v2/dictionary}
+#' @param genre *optional a genre such as Blues, Rock etc.
 #' @param decade *optional a decade for instance
 #' @param limit *optional max number of results defaults to 20
 #' @param offset *optional pagination which page of the results do you want
@@ -44,9 +45,13 @@ album_lookup <- function( prefix= NULL, genre = NULL, decade = NULL,
 #'
 #' Search for a specific album, the name needs to match exactly. But you can
 #' also search for similar albums but the name needs to match exactly too.
-#'
+#' See for genres and decade valid options:
+#' \url{https://developer.musicgraph.com/api-docs/v2/dictionary}
 #' @param name *optional Return albums who match the name; exact, case insensitive 	"White+album"
 #' @param similar_to *optional Return albums who are similar to the given name; exact, case insensitive similar_to="The wall"
+#' @param country see the dictionary
+#' @param top_rated only the top results
+#' @param gender male or female
 #' @inheritParams album_lookup
 #' @return a response object.
 #' @export

@@ -1,11 +1,17 @@
 Package: musicgraph
-Title: Interface With Musicgraph.com Through R.
+Title: Interface With Musicgraph.com Through R
 Version: 0.0.0.9000
 Authors@R: "Roel M. Hogervorst <hogervorst.rm@gmail.com> [cre, aut]"
-Description: What the package does (one paragraph).
+Description: Connect to the musicgraph-api to collect music information.
+    It allows you to make requests and parse the result in a data.frame.
 Depends: R (>= 3.3.2)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: stringr,
-    httr
+    httr,
+    jsonlite,
+    utils
+URL: https://github.com/RMHogervorst/musicgraph
+BugReports: https://github.com/RMHogervorst/musicgraph/issues
+RoxygenNote: 6.0.1

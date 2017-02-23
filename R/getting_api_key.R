@@ -3,20 +3,22 @@
 #' It took me a while to find out how you get your api key. So I wrote this
 #' little documentation. For every request to musicgraph you will need an api key.
 #' The good
-#' thing is, that you can register on \link{https://developer.musicgraph.com}
+#' thing is, that you can register on \url{https://developer.musicgraph.com}
 #' and for most uses you can use the key for free. There is a rate limit of
 #' 50 calls per minute and you cannot use social features.
 #'
-#' @section instructions on how to find the key online
-#' - create an account
-#' - log in
-#' - go to dashboard
-#' - click on applications
-#' - fill in some details about the app. (if you like)
-#' - copy the key
 #'
+#' @details Instructions on how to find the key online.
 #'
-#' @section Where to put the key
+#' First create an account
+#' then log in
+#' go to dashboard
+#' click on applications
+#' *optional fill in some details about the app. (if you like)
+#' copy the key to a secure location.
+#'
+#' @details Where to put the key.
+#'
 #' You can work with a loose key if you supply it with every call.
 #' However this is tedious work and not to mention insecure.
 #' The key you recieve is a secret and it's best not to share the secred with
@@ -50,7 +52,9 @@
 #' to go.
 #'
 #' For more info about api packages best practices check the vignette
-#' of the httr package \link{https://cran.r-project.org/web/packages/httr/vignettes/api-packages.html}
-#'
+#' of the httr package
+#' \url{https://cran.r-project.org/web/packages/httr/vignettes/api-packages.html}
 #' @name getting_api_key
+#' @aliases api_key_info
+#' @family general_documentation
 NULL

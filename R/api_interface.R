@@ -11,7 +11,8 @@ check_env_for_api_key <- function(){
 #'
 #' This function is not for direct use.
 #'
-#' @param key "quoted" key or by default searches in .Renviron en Sys.setenv
+#' @param key "quoted" key or by default searches in .Renviron en Sys.setenv for
+#'     a key
 #'
 #' @return key
 api_key <- function(key = NULL){
@@ -43,10 +44,10 @@ find_musicgraph_token <- function(){
             choice <- readline("Do you  want to create that file? (y/n) ")
             if(choice== "y"){
                 writeLines("MUSICGRAPH_KEY = ",file.path(normalizePath("~/"), ".Rtest") )
-                file.edit(file.path(normalizePath("~/"), ".Renviron"))
+                utils::file.edit(file.path(normalizePath("~/"), ".Renviron"))
             }else if(choice == "n"){
                 message("You will have this message every time")
-                key <- set_musigraph_key()
+                key <- set_musicgraph_key()
             }
         }
     }else{
@@ -94,7 +95,7 @@ api_get_call <- function(path, querylist, api_key= NULL){
 #
 
 
-#' internal function to validate genre
+#' Internal function to validate genre
 #'
 #' It changes the string to titlecase if not already so
 #' and checks it against the list found on the website.
@@ -102,7 +103,7 @@ api_get_call <- function(path, querylist, api_key= NULL){
 #' can't find a match.
 #' I made this list for v2 of the API on 2017-02-16. It might
 #' change. I hope not.
-#' \link{https://developer.musicgraph.com/api-docs/v2/dictionary}
+#' \url{https://developer.musicgraph.com/api-docs/v2/dictionary}
 #' @param genrestring the genre string people give in searches
 #' @return a string formatted in the correct way that matches the genrelist.
 #' @family validators
@@ -134,10 +135,10 @@ validate_genre <- function(genrestring){
       "soundtracks",
       "vocals",
       "world")
-    if(!genre %in% genrevector){
-        stop("Cannot find: ", genre, " in genre list. Check developer.musicgraph.com/api-docs/v2/dictionary for more info.")
+    if(!genrestring %in% genrevector){
+        stop("Cannot find: ", genrestring, " in genre list. Check developer.musicgraph.com/api-docs/v2/dictionary for more info.")
     }else
-        genre
+        genrestring
 }
 
 
@@ -145,7 +146,7 @@ validate_genre <- function(genrestring){
 #'
 #' This function matches decade against a list of possible decades.
 #' It will throw an error when it doesn't match
-#' @param decade
+#' @param decadestring a decade such as 1980s
 #' @return correctly formatted decade that matches the list on musicgraph.com
 #' @family validators
 validate_decade <- function(decadestring){
@@ -199,20 +200,6 @@ response_code_translator <- function(parsed_result){
     output <- paste(status_code, ",", message_content)
     output
 }
-
-result_parser <- function(object){
-    result <- httr::content(object,encoding = "utf8",as = "text")
-    parsed_result <- jsonlite::fromJSON(result)
-    parsed_result
-}
-# TEST # response_code_translator(result_parser(response))
-
-pagination_parser <- function(parsed_result){
-    message(parsed_result$pagination$count, "results (page ",
-            parsed_result$pagination$offset,") total results: ",
-            parsed_result$pagination$total)
-}
-# TEST # pagination_parser(result_parser(response))
 
 
 #' Check artistID against pattern
